@@ -13,6 +13,41 @@ if(menuButton&&menu){
   menu.addEventListener('click',e=>{if(e.target.closest('a')){menuButton.setAttribute('aria-expanded','false');menu.classList.remove('open');}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){menuButton.click();menuButton.focus();}});
 }
+const siteHeader=document.querySelector('.site-header');
+const sectionNav=document.querySelector('.section-index');
+if(siteHeader){
+  const sectionLinks=sectionNav?[...sectionNav.querySelectorAll('a')]:[];
+  const sections=sectionLinks.map(link=>({link,target:document.getElementById(link.hash.slice(1))})).filter(item=>item.target);
+  let sectionFrame=0;
+  function updateSection(){
+    sectionFrame=0;
+    let current=sections[0];
+    const threshold=siteHeader.getBoundingClientRect().height+32;
+    for(const section of sections){
+      if(section.target.getBoundingClientRect().top<=threshold)current=section;
+      else break;
+    }
+    sections.forEach(section=>{
+      if(section===current)section.link.setAttribute('aria-current','location');
+      else section.link.removeAttribute('aria-current');
+    });
+  }
+  function requestSectionUpdate(){
+    if(!sectionFrame)sectionFrame=requestAnimationFrame(updateSection);
+  }
+  function syncHeaderOffset(){
+    document.documentElement.style.setProperty('--header-height',`${siteHeader.getBoundingClientRect().height}px`);
+    requestSectionUpdate();
+  }
+  syncHeaderOffset();
+  new ResizeObserver(syncHeaderOffset).observe(siteHeader);
+  window.addEventListener('scroll',requestSectionUpdate,{passive:true});
+  window.addEventListener('hashchange',requestSectionUpdate);
+  sectionLinks.forEach(link=>link.addEventListener('click',()=>{
+    if(menuButton?.getAttribute('aria-expanded')==='true')menuButton.click();
+    syncHeaderOffset();
+  }));
+}
 document.querySelectorAll('.video-player').forEach(player=>{
   const frame=player.querySelector('iframe');
   const original=player.querySelector('.video-original');

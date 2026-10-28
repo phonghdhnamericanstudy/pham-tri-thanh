@@ -1,3 +1,6 @@
+if(/^\/research\/?$/.test(window.location.pathname)&&['#paveguard','#floodguard','#sand-battery'].includes(window.location.hash)){
+  window.location.replace('/journey/'+window.location.hash);
+}
 const menuButton=document.querySelector('.menu-button');
 const menu=document.querySelector('.main-nav');
 if(menuButton&&menu){
@@ -13,13 +16,14 @@ if(menuButton&&menu){
 document.querySelectorAll('.video-player').forEach(player=>{
   const frame=player.querySelector('iframe');
   const original=player.querySelector('.video-original');
-  player.querySelectorAll('[data-video-id]').forEach(button=>{
+  const choices=player.querySelectorAll('[data-video-id],[data-video-src]');
+  choices.forEach(button=>{
     button.addEventListener('click',()=>{
       if(button.getAttribute('aria-pressed')==='true')return;
-      frame.src='https://drive.google.com/file/d/'+button.dataset.videoId+'/preview';
+      frame.src=button.dataset.videoSrc||'https://drive.google.com/file/d/'+button.dataset.videoId+'/preview';
       frame.title=button.dataset.videoLabel;
-      original.href='https://drive.google.com/file/d/'+button.dataset.videoId+'/view';
-      player.querySelectorAll('[data-video-id]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+      original.href=button.dataset.videoUrl||'https://drive.google.com/file/d/'+button.dataset.videoId+'/view';
+      choices.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
     });
   });
 });

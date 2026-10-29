@@ -38,3 +38,15 @@
 main [id]{scroll-margin-top:0}
 .story-spread figcaption{top:calc(var(--header-height) + 24px)}
 @media(max-width:760px){:root{--header-height:124px}.section-nav-wrap .section-index{gap:0 22px}.section-nav-wrap .section-index a{min-height:44px;font-size:11px}}
+/* Full source stories and uncropped media. */
+.family-generation,.music-festival{grid-template-columns:repeat(2,minmax(0,1fr));align-items:center}
+.family-generation .photo,.parents-review .photo,.music-festival .photo,.football-childhood .photo,.confirmation-pages .photo{aspect-ratio:auto;background:transparent}
+.family-generation img,.parents-review img,.music-festival img,.football-childhood img,.confirmation-pages img{width:100%;height:auto;object-fit:contain}
+.family-generation{margin-top:28px}.family-parents{margin-top:56px;padding-top:36px;border-top:1px solid var(--line)}
+.family-parents h3{font-size:30px;line-height:1.25}.parents-review{margin:32px 0}.parents-review .photo{width:100%;max-width:720px}.parents-review figcaption p{font-size:14px;margin-top:14px}
+.music-caption{max-width:850px;margin:32px auto 50px}.guitar-section h3{font-size:28px;margin:28px 0}.football-childhood{margin-bottom:28px}.football-childhood .photo{width:100%}
+.internship-confirmation{margin:44px 0 0 258px;border-top:1px solid var(--line);padding-top:30px}.internship-confirmation h3{font-size:28px}.confirmation-pages{align-items:start}.confirmation-pages .photo{border:1px solid var(--line)}
+.award-entry#football .gold-award-photo,.award-entry#football-silver .silver-team-photo{max-width:850px}.award-entry#football .photo,.award-entry#football-silver .photo{max-width:850px;width:100%}
+.story-spread .library-new-photos{margin-top:12px}.community-video{margin-left:0;max-width:960px}
+@media(max-width:760px){.internship-confirmation{margin-left:0}.family-generation,.music-festival{grid-template-columns:1fr}.confirmation-pages{grid-template-columns:1fr}.confirmation-pages .photo{max-width:480px;margin-inline:auto}.family-parents h3{font-size:25px}}
+#football.beyond-activity .beyond-story{grid-template-columns:1fr;gap:28px}#football.beyond-activity .beyond-story>div:last-child{max-width:960px}.family-generation+p{margin-top:24px}
